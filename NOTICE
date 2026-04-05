@@ -1,0 +1,66 @@
+# THIRD-PARTY COMPONENTS AND MODEL LICENSES
+
+Christopher AI is licensed under the GNU Affero General Public License v3.0 (AGPL v3).
+However, this software wraps and interfaces with third-party AI models that are subject
+to their own separate licenses.
+
+## AI Models
+
+Christopher AI does not include AI model weights by default. Users must download
+models separately through Ollama or other compatible services. Common models include:
+
+- **Llama 3 / Llama 3.1 / Llama 3.2** - Licensed under Meta's Llama Community License
+  https://www.llama.com/llama3/license/
+- **Mistral** - Licensed under Apache 2.0 or Mistral AI's specific license
+- **Other Ollama-compatible models** - Subject to their respective creators' licenses
+
+## User Responsibility
+
+**Users are solely responsible for:**
+1. Ensuring compliance with the license terms of any AI model they download and use.
+2. Verifying that their intended use (personal, commercial, research, etc.) complies
+   with the model provider's terms.
+3. Understanding that model licenses may have restrictions on redistribution,
+   commercial use, or modification that are independent of Christopher AI's license.
+4. Verifying model recency and limitations before relying on outputs for legal,
+   medical, financial, safety, or other high-stakes decisions.
+
+## Model Recency and Output Limits
+
+- Model responses can be stale, incomplete, or incorrect, especially for current events,
+  evolving laws, breaking security advisories, and product/version changes.
+- The default model used by Christopher (`llama3.2:1b`) has a published cutting
+  knowledge date of **December 2023** in its public metadata.
+- Users should independently verify time-sensitive or high-impact information against
+  authoritative, current sources.
+
+## Real-Time Retrieval Status
+
+- Real-time web scraping/query retrieval is being investigated for potential future
+  versions of Christopher AI to improve time-sensitive responses.
+- Unless explicitly documented and enabled in your deployment, Christopher should be
+  treated as operating without live web access.
+
+## Separation of Concerns
+
+- **Christopher AI Code:** AGPL v3 (your modifications must be shared)
+- **AI Model Weights:** Subject to model provider's license (e.g., Meta, Mistral, etc.)
+- **User Data:** Stored locally in browser localStorage with chat content encrypted at rest for password-protected profiles (no data collection by Christopher AI)
+
+## Security Notes
+
+- Christopher AI is designed for local deployment.
+- HTTPS is enabled by default for LAN usage to protect data in transit between clients and the host.
+- Optional HTTP fallback is available for compatibility and troubleshooting, but is not encrypted in transit.
+- The setup process generates a self-signed certificate for the host LAN IP; client devices may need to trust the generated certificate.
+- The app header includes a runtime transport indicator so users can confirm when they are connected over HTTPS.
+- Browser storage remains user-managed and can be deleted by clearing site data.
+
+## Contact
+
+For questions about model licensing, please refer to the respective model provider's
+documentation. For questions about Christopher AI's code license, please open an
+issue on the repository.
+
+---
+Last Updated: April 4, 2026

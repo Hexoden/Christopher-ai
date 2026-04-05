@@ -1,0 +1,26 @@
+{
+  auto_https off
+  servers {
+    strict_sni_host insecure_off
+    protocols h1 h2
+  }
+}
+
+:443 {
+  bind 0.0.0.0
+  tls /certs/server.crt /certs/server.key
+  encode gzip zstd
+  handle_path /ollama/* {
+    reverse_proxy ollama:11434
+  }
+  reverse_proxy app:3000
+}
+
+:80 {
+  bind 0.0.0.0
+  encode gzip zstd
+  handle_path /ollama/* {
+    reverse_proxy ollama:11434
+  }
+  reverse_proxy app:3000
+}
