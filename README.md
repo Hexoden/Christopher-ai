@@ -172,7 +172,22 @@ Example: Neo / CorrectHorseBatteryStaple
 - **🎨 Cyberpunk UI**: Fully responsive, dark-mode, neon-themed interface optimized for low-light environments.
 - **📱 Mobile Ready**: Access from any device on your local network (phone, tablet, laptop) using the host IP.
 
-### 🛑 Maintenance
+### � Visual Overview
+
+#### Landing Page
+![Christopher AI Landing Page](Screenshots/website-screenshot.png)
+![Christopher AI Features](Screenshots/website-screenshot2.png)
+
+#### Application Interface
+**Login & Profile Setup**
+![Christopher AI Login](Screenshots/chris-login-screenshot.png)
+
+**Chat Interface**
+![Christopher AI Chat](Screenshots/chris-chat-screenshot.png)
+
+---
+
+### �🛑 Maintenance
 **Stop the Service**
 To stop the AI and free up resources:
 ```bash
