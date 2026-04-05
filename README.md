@@ -225,6 +225,11 @@ the model provider's terms when downloading and using any AI model.
 
 See [NOTICE](NOTICE) for details on third-party components.
 
+### 💬 Maintainer Note
+
+This is the first project I have felt confident enough to publish on GitHub.
+I am still learning, and I welcome respectful feedback, suggestions, and improvements.
+
 ### 🇬🇧 Made in the UK with ♥️
 
 Built for privacy enthusiasts and self-hosters.
