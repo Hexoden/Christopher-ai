@@ -80,6 +80,44 @@ git checkout -b feature/your-feature-name
 5. Push to your fork
 6. Open a Pull Request
 
+## Pull Request Policy
+All contribution work should be reviewed through a Pull Request (PR).
+
+### Branch Naming
+Use clear, prefixed branch names:
+
+- `feature/<short-description>`
+- `fix/<short-description>`
+- `docs/<short-description>`
+- `security/<short-description>`
+
+### PR Requirements
+Each PR should include:
+
+- A clear summary of what changed and why
+- Linked issue(s) when applicable
+- Testing evidence (commands run and results)
+- Screenshots for UI/UX changes
+- Notes on any breaking change or migration impact
+- Security impact statement for auth, storage, transport, API, or deployment changes
+
+### Security-Related Changes
+- Do not disclose exploit details in a public PR before a fix is available.
+- Follow the vulnerability process in [SECURITY.md](SECURITY.md) for sensitive reports.
+
+### Review and Merge Expectations
+- Keep PRs focused and reasonably small where possible.
+- Address review feedback before requesting re-review.
+- Maintainers may request additional tests or documentation updates before merge.
+- CI/build checks and required approvals must pass before merge.
+
+### Draft PRs
+Draft PRs are encouraged for early feedback. Convert to ready-for-review only when:
+
+- Core implementation is complete
+- Relevant tests pass
+- Documentation and screenshots are updated (if applicable)
+
 # Commit Message Guidelines
 Follow conventional commits for clarity:
 ```
@@ -186,4 +224,4 @@ Every contribution matters, whether it's:
 
 Built with ❤️ for privacy enthusiasts and self-hosters.
 
-Last Updated: April 4, 2026
+Last Updated: April 6, 2026
