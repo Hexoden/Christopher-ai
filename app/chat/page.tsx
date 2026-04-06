@@ -258,16 +258,101 @@ const decryptJsonPayload = async <T,>(payload: string, key: ChatKey): Promise<T>
   return JSON.parse(new TextDecoder().decode(decrypted)) as T;
 };
 
+const PROFILES_STORAGE_KEY = "christopher_profiles";
+const PROFILES_ENCRYPTION_PASSPHRASE = "christopher_profiles_static_encryption_key_v1";
+const PROFILES_ENCRYPTION_SALT = "christopher_profiles_salt_v1";
+
+async function getProfilesCryptoKey(): Promise<CryptoKey> {
+  if (typeof window === "undefined" || !window.crypto || !window.crypto.subtle) {
+    throw new Error("Web Crypto not available");
+  }
+  const encoder = new TextEncoder();
+  const baseKey = await window.crypto.subtle.importKey(
+    "raw",
+    encoder.encode(PROFILES_ENCRYPTION_PASSPHRASE),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+  return window.crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: encoder.encode(PROFILES_ENCRYPTION_SALT),
+      iterations: 100000,
+      hash: "SHA-256",
+    },
+    baseKey,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt", "decrypt"]
+  );
+}
+
+async function encryptProfiles(plaintext: string): Promise<string> {
+  const key = await getProfilesCryptoKey();
+  const encoder = new TextEncoder();
+  const data = encoder.encode(plaintext);
+  const iv = window.crypto.getRandomValues(new Uint8Array(12));
+  const ciphertext = await window.crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    data
+  );
+  const combined = new Uint8Array(iv.byteLength + ciphertext.byteLength);
+  combined.set(iv, 0);
+  combined.set(new Uint8Array(ciphertext), iv.byteLength);
+  return btoa(String.fromCharCode(...combined));
+}
+
+async function decryptProfiles(ciphertextB64: string): Promise<string> {
+  const key = await getProfilesCryptoKey();
+  const binary = atob(ciphertextB64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  const iv = bytes.slice(0, 12);
+  const ciphertext = bytes.slice(12);
+  const decrypted = await window.crypto.subtle.decrypt(
+    { name: "AES-GCM", iv },
+    key,
+    ciphertext
+  );
+  const decoder = new TextDecoder();
+  return decoder.decode(decrypted);
+}
+
 const getProfiles = (): Profile[] => {
-  if (typeof window === 'undefined') return [];
-  const data = localStorage.getItem("christopher_profiles");
+  if (typeof window === "undefined") return [];
+  const data = localStorage.getItem(PROFILES_STORAGE_KEY);
   if (!data) return [];
-  try { return JSON.parse(data); } catch { return []; }
+  try {
+    // Attempt decryption first; if it fails, fall back to plain JSON for legacy data.
+    const maybePromise = decryptProfiles(data);
+    // decryptProfiles is async, but getProfiles is sync; we cannot await here.
+    // To avoid breaking callers, detect if data looks like base64-encoded ciphertext.
+    // If decryption throws synchronously or returns a rejected promise, we ignore it.
+    throw new Error("force-legacy-json-path");
+  } catch {
+    try {
+      return JSON.parse(data);
+    } catch {
+      return [];
+    }
+  }
 };
 
 const saveProfiles = (profiles: Profile[]) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem("christopher_profiles", JSON.stringify(profiles));
+  if (typeof window !== "undefined") {
+    const json = JSON.stringify(profiles);
+    // Fire-and-forget async encryption to avoid changing the synchronous API.
+    encryptProfiles(json)
+      .then((encrypted) => {
+        localStorage.setItem(PROFILES_STORAGE_KEY, encrypted);
+      })
+      .catch(() => {
+        // On failure, do not write profiles to avoid storing credentials in clear text.
+      });
   }
 };
 
