@@ -84,7 +84,7 @@ git checkout -b feature/your-feature-name
 All contribution work should be reviewed through a Pull Request (PR).
 
 ### AI-Assisted Code Policy
-AI-generated or AI-assisted code submissions are welcome in this community and are permitted under our contribution terms.
+AI-generated or AI-assisted code submissions are welcome in this community and are permitted under these CONTRIBUTING guidelines and the project's AGPL v3 license.
 
 If you use AI tools while contributing, you are responsible for the submitted code quality. Contributors must:
 
