@@ -853,12 +853,16 @@ export default function Home() {
 
     const userMsg: Message = { role: "user", content: input };
     const newMessages: Message[] = [...activeThread.messages, userMsg];
-    const firstUserIndex = newMessages.findIndex((m) => m.role === "user");
+    const firstUserIndex = newMessages.findIndex((m) => m.role === "user" && m.content.trim().length > 0);
     const conversationMessages = firstUserIndex >= 0 ? newMessages.slice(firstUserIndex) : [];
-    const modelMessages: Message[] = conversationMessages
+    const modelMessagesWindow: Message[] = conversationMessages
       .filter((m) => m.role === "user" || m.role === "assistant")
       .filter((m) => !(m.role === "assistant" && m.content === WELCOME_MESSAGE))
       .slice(-6);
+    const hasUserInModelWindow = modelMessagesWindow.some(
+      (m) => m.role === "user" && m.content.trim().length > 0
+    );
+    const modelMessages: Message[] = hasUserInModelWindow ? modelMessagesWindow : [userMsg];
     setThreads(prev => prev.map(t => t.id === activeThreadId ? { ...t, messages: newMessages } : t));
     setInput("");
     setIsLoading(true);
