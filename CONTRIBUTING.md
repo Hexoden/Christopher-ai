@@ -83,6 +83,17 @@ git checkout -b feature/your-feature-name
 ## Pull Request Policy
 All contribution work should be reviewed through a Pull Request (PR).
 
+### AI-Assisted Code Policy
+AI-generated or AI-assisted code submissions are welcome in this community and are permitted under these CONTRIBUTING guidelines and the project's AGPL v3 license.
+
+If you use AI tools while contributing, you are responsible for the submitted code quality. Contributors must:
+
+- Review and validate AI-generated output for bugs, regressions, and hallucinated logic.
+- Confirm that code is safe, accurate, and aligned with this project's privacy and security expectations.
+- Ensure they understand how the submitted code works well enough to discuss and revise it during review.
+
+Submissions may be sent back for revision if the contributor cannot explain key implementation decisions or if unreviewed AI output introduces avoidable issues.
+
 ### Branch Naming
 Use clear, prefixed branch names:
 
