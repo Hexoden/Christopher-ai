@@ -90,7 +90,9 @@ export async function POST(req: NextRequest) {
       .filter((m: any) => (m?.role === 'user' || m?.role === 'assistant') && typeof m?.content === 'string')
       .map((m: any) => ({ role: m.role, content: m.content }));
 
-    const firstUserIndex = conversationMessages.findIndex((m: any) => m.role === 'user');
+    const firstUserIndex = conversationMessages.findIndex(
+      (m: any) => m.role === 'user' && m.content.trim().length > 0
+    );
     if (firstUserIndex < 0) {
       return NextResponse.json(
         { error: 'A user message is required to start or continue chat.' },
@@ -99,6 +101,15 @@ export async function POST(req: NextRequest) {
     }
 
     const safeMessages = conversationMessages.slice(firstUserIndex).slice(-12);
+    const hasUserInSafeMessages = safeMessages.some(
+      (m: any) => m.role === 'user' && m.content.trim().length > 0
+    );
+    if (!hasUserInSafeMessages) {
+      return NextResponse.json(
+        { error: 'A user message is required to start or continue chat.' },
+        { status: 400 }
+      );
+    }
 
     const upstreamPayload = {
       model: typeof body?.model === 'string' ? body.model : DEFAULT_MODEL,

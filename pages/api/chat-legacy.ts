@@ -62,13 +62,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .filter((m: any) => (m?.role === "user" || m?.role === "assistant") && typeof m?.content === "string")
       .map((m: any) => ({ role: m.role, content: m.content }));
 
-    const firstUserIndex = conversationMessages.findIndex((m: any) => m.role === "user");
+    const firstUserIndex = conversationMessages.findIndex(
+      (m: any) => m.role === "user" && m.content.trim().length > 0
+    );
     if (firstUserIndex < 0) {
       res.status(400).json({ error: "A user message is required to start or continue chat." });
       return;
     }
 
     const safeMessages = conversationMessages.slice(firstUserIndex).slice(-12);
+    const hasUserInSafeMessages = safeMessages.some(
+      (m: any) => m.role === "user" && m.content.trim().length > 0
+    );
+    if (!hasUserInSafeMessages) {
+      res.status(400).json({ error: "A user message is required to start or continue chat." });
+      return;
+    }
 
     const upstreamPayload = {
       model: typeof body?.model === "string" ? body.model : DEFAULT_MODEL,
