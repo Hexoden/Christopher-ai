@@ -1,7 +1,7 @@
 # <img src="public/icon.svg" width="30" height="30"> CHRISTOPHER AI - Neural Interface
   [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
   
-> **"Messages are encrypted at rest in your browser storage, protected by your profile password, and designed to be temporary. Use the HTTPS LAN URL for encrypted transport in transit. Christopher runs locally on your hardware."**
+> **"Messages are encrypted at rest in your browser storage, protected by your profile password, and designed to be temporary. Use the HTTPS LAN URL for encrypted web traffic in transit. Christopher runs locally on your hardware."**
 
 Christopher is a self-hosted, multi-user cyberpunk AI chatbot powered by **Ollama** and **Next.js**. It brings the power of Large Language Models (LLMs) to your local network without sending a single byte of data to the cloud. Designed for privacy enthusiasts, developers, and home-labbers who demand sovereignty over their digital conversations.
 
