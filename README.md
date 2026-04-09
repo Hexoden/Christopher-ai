@@ -1,5 +1,8 @@
 # <img src="public/icon.svg" width="30" height="30"> CHRISTOPHER AI - Neural Interface
   [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+  ---
+  ![Alt](https://repobeats.axiom.co/api/embed/aac354d070c912826730871d3afd7359ecd97009.svg "Repobeats analytics image")
+  ---
   
 > **"Messages are encrypted at rest in your browser storage, protected by your profile password, and designed to be temporary. Use the HTTPS LAN URL for encrypted web traffic in transit. Christopher runs locally on your hardware."**
 
